@@ -2,6 +2,8 @@ localtesting/
 node_modules/
 bower_components/
 
+npm-debug.log
+
 #For IDE
 *.iml
 *.ipr

@@ -251,9 +251,72 @@
     display: block
 }
 
-.editor-preview>p,
-.editor-preview-side>p {
-    margin-top: 0
+.editor-preview p,
+.editor-preview-side p {
+    margin: 0 0 10px;
+}
+
+.editor-preview h1,
+.editor-preview-side h1,
+.editor-preview h2,
+.editor-preview-side h2,
+.editor-preview h3,
+.editor-preview-side h3,
+.editor-preview h4,
+.editor-preview-side h4,
+.editor-preview h5,
+.editor-preview-side h5,
+.editor-preview h6,
+.editor-preview-side h6 {
+    font-weight: bold;
+    line-height: 1.1;
+    margin: 20px 0 10px;
+}
+
+.editor-preview h4,
+.editor-preview-side h4,
+.editor-preview h5,
+.editor-preview-side h5,
+.editor-preview h6,
+.editor-preview-side h6 {
+    margin: 10px 0;
+}
+
+.editor-preview ul,
+.editor-preview-side ul {
+    list-style: initial;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.editor-preview ul ul,
+.editor-preview-side ul ul {
+    padding-bottom: 0;
+}
+
+.editor-preview ol,
+.editor-preview-side ol {
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.editor-preview ol ol,
+.editor-preview-side ol ol {
+    padding-bottom: 0;
+}
+
+.editor-preview code,
+.editor-preview-side code,
+.editor-preview pre,
+.editor-preview-side pre {
+    font-size: 12px;
+}
+
+.editor-preview blockquote,
+.editor-preview-side blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    border-left: 5px solid #eee;
 }
 
 .editor-preview pre,

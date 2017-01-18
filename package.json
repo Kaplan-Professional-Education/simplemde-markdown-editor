@@ -20,10 +20,15 @@
   "bugs": {
     "url": "https://github.com/NextStepWebs/simplemde-markdown-editor/issues"
   },
+  "scripts": {
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
+  },
   "dependencies": {
     "codemirror": "*",
     "codemirror-spell-checker": "*",
-    "marked": "*"
+    "marked": "*",
+    "markdown-it": "^4.2.1"
   },
   "devDependencies": {
     "browserify": "*",
