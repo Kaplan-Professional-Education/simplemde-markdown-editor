@@ -1,3 +1,15 @@
+# KPE Fork
+This repository is a fork of the SimpleMDE Markdown Editor on github.com with alterations to support additional required functionality.  Updates from the upstream source need to be pulled manually.
+
+After cloning the repository, add the remote to the github.com master
+* ```git remote add -t master upstream https://github.com/NextStepWebs/simplemde-markdown-editor.git```
+
+Pull the upstream changes locally
+* ```git pull upstream master```
+
+Resolve any merge conflicts and push the changes to kss-github
+* ```git push origin master```
+
 # SimpleMDE - Markdown Editor
 A drop-in JavaScript textarea replacement for writing beautiful and understandable Markdown. The WYSIWYG-esque editor allows users who may be less experienced with Markdown to use familiar toolbar buttons and shortcuts. In addition, the syntax is rendered while editing to clearly show the expected result. Headings are larger, emphasized words are italicized, links are underlined, etc. SimpleMDE is one of the first editors to feature both built-in autosaving and spell checking.
 
