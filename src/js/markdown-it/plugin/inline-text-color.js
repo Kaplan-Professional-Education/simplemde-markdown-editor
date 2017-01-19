@@ -7,13 +7,13 @@ var COLOR_CLOSE_REGEX = /{color}/;
 var TOKEN_TYPE = "color_text";
 var MARKUP = "{color}";
 
-function getColor(attrs) {
+function getStyle(attrs) {
 	if(!attrs || attrs.length < 1) { return null; }
 
 	for(var i=0; i< attrs.length; i++) {
 		var att = attrs[i];
 		if(att && att.length > 1) {
-			if(att[0] === "color") {
+			if(att[0] === "style") {
 				return att[1];
 			}
 		}
@@ -63,7 +63,7 @@ function color(state, silent) {
 	token.markup  = MARKUP;
 
 	if(isOpen) {
-		token.attrPush(["color", result[1]]);
+		token.attrPush(["style", "color:"+result[1]]);
 	}
 
 	state.pos = state.posMax;
@@ -83,10 +83,10 @@ function renderDefault(tokens, idx) {
 	result.push("span");
 
 	if(token.nesting === 1) {
-		var color = getColor(token.attrs);
+		var style = getStyle(token.attrs);
 
 		if(color) {
-			result.push(" style=\"color:",color,";\"");
+			result.push(" style=\"",style,";\"");
 		}
 	}
 	result.push(">");
