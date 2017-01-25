@@ -17,8 +17,6 @@ function getAlignment(src) {
 }
 
 function alignment(state, startLine, endLine, silent) {
-	console.log(state);
-
 	var src, dir, token,
 		pos = state.bMarks[startLine] + state.tShift[startLine],
 		max = state.eMarks[startLine];
