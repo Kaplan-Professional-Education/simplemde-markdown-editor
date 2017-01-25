@@ -18,9 +18,6 @@ CodeMirror.defineMode("markdown-it-plugins", function(config, modeConfig) {
 	function getActiveStyles(state) {
 		var styles = [];
 
-		console.log("getActiveStyles state:");
-		console.log(state);
-
 		if(state.color.length) {
 			styles.push(state.color[state.color.length-1]);
 		}
