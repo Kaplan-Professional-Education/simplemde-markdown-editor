@@ -26,7 +26,7 @@ function alignment(state, startLine, endLine, silent) {
 	// Check for '['
 	if (state.src.charCodeAt(pos) !== 0x5B || pos + 4 >= max) { return false; }
 
-	src = state.src.slice(pos, 4);
+	src = state.src.slice(pos, pos + 4);
 	dir = getAlignment(src);
 
 	if (!dir) { return false; }
