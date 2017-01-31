@@ -211,7 +211,7 @@ CodeMirror.defineMode("markdown-it", function(cmCfg, modeCfg) {
 			state.f = state.block = local;
 			if (modeCfg.highlightFormatting) state.formatting = "code-block";
 			state.code = -1;
-			return getType(state);	
+			return getType(state);
 		}
 
 		return switchInline(stream, state, state.inline);

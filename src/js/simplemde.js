@@ -177,6 +177,8 @@ function getState(cm, pos) {
 			ret[data.replace("header", "heading")] = true;
 		} else if(data.match(/^color--(?:hex-)?\w+$/)) {
 			ret.color = true;
+		} else if(data.match(/^alignment-(left|right|center|justify)$/)) {
+			ret.alignment = true;
 		}
 	}
 	return ret;
