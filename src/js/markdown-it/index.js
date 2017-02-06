@@ -3,5 +3,6 @@ module.exports = {
 	Plugins:[
 		require("./plugin/inline-text-color"),
 		require("./plugin/block-align"),
+		require("./plugin/inline-jsx"),
 	]
 };
