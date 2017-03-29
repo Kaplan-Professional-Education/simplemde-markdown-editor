@@ -2,7 +2,7 @@
 
 "use strict";
 
-var COLOR_OPEN_REGEX = /{color:(#?\w+)}/;
+var COLOR_OPEN_REGEX = /{color:\s*(#?\w+)}/;
 var COLOR_CLOSE_REGEX = /{color}/;
 var TOKEN_TYPE = "color_text";
 var MARKUP = "{color}";
