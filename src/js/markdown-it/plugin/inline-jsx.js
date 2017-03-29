@@ -31,10 +31,10 @@ function jsx_inline(state, silent) {
 	match = state.src.slice(pos).match(JSX_TAG_RE);
 	if (!match) { return false; }
 
-	if (!silent) {
-		end = match[0].length;
-		tag = match[1];
+	end = match[0].length;
+	tag = match[1];
 
+	if (!silent) {
 		token         = state.push("jsx_inline", tag, 0);
 		token.markup  = state.src.slice(pos, pos + end);
 
