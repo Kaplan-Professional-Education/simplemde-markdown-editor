@@ -5,5 +5,6 @@ module.exports = {
 		require("./plugin/block-align"),
 		require("./plugin/inline-jsx"),
 		require("./plugin/inline-icons")(["fa", "kf"]),
+		require("./plugin/inline-link-targets"),
 	],
 };
