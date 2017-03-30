@@ -21,7 +21,7 @@ var banner = ["/**",
   " * @license <%= pkg.license %>",
   " */",
   ""].join("\n");
- 
+
 gulp.task("prettify-css", [], function() {
   return gulp.src("./src/css/simplemde.css")
     .pipe(prettify({css: {indentChar: "\t", indentSize: 1}}))
@@ -59,7 +59,7 @@ gulp.task("browserify", ["lint"], function() {
 
 gulp.task("build:simplemde", ["browserify:debug", "browserify", "lint"], function() {
   var js_files = ["./debug/simplemde.js"];
-  
+
   return gulp.src(js_files)
     .pipe(concat("simplemde.min.js"))
     .pipe(uglify())
@@ -87,7 +87,7 @@ gulp.task("styles", ["prettify-css"], function() {
     "./src/css/*.css",
     "./node_modules/codemirror-spell-checker/src/css/spell-checker.css"
   ];
-  
+
   return gulp.src(css_files)
     .pipe(concat("simplemde.css"))
     .pipe(buffer())
