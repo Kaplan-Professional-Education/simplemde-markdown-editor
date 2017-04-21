@@ -27,8 +27,9 @@
   "dependencies": {
     "codemirror": "*",
     "codemirror-spell-checker": "*",
-    "marked": "*",
-    "markdown-it": "^4.2.1"
+    "markdown-it": "^4.2.1",
+    "markdown-it-sup": "^1.0.0",
+    "marked": "*"
   },
   "devDependencies": {
     "browserify": "*",
