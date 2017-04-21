@@ -5,8 +5,8 @@
 
 
 var unquoted      = "([^\"'=<>`\\x00-\\x20]+)";
-var single_quoted = "'([^']*)'";
-var double_quoted = '"([^"]*)"';  // eslint-disable-line quotes
+var single_quoted = "'(?:[^'\\]|\\.)*'";
+var double_quoted = '"(?:[^"\\]|\\.)*"';  // eslint-disable-line quotes
 
 var attr_name     = "([a-zA-Z_:][a-zA-Z0-9:._-]*)";
 var attr_value    = "(?:" + unquoted + "|" + single_quoted + "|" + double_quoted + ")";
