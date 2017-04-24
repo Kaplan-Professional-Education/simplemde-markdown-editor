@@ -5,8 +5,8 @@
 
 
 var unquoted      = "([^\"'=<>`\\x00-\\x20]+)";
-var single_quoted = "'([^']*)'";
-var double_quoted = '"([^"]*)"';  // eslint-disable-line quotes
+var single_quoted = "'((?:[^'\\\\]|\\\\.)*)'";
+var double_quoted = '"((?:[^"\\\\]|\\\\.)*)"';  // eslint-disable-line quotes
 
 var attr_name     = "([a-zA-Z_:][a-zA-Z0-9:._-]*)";
 var attr_value    = "(?:" + unquoted + "|" + single_quoted + "|" + double_quoted + ")";
@@ -41,7 +41,20 @@ function jsx_inline(state, silent) {
 		token.props = {};
 		attributes = new RegExp(attribute, "g");
 		while (atr = attributes.exec(match[0])) {  // eslint-disable-line no-cond-assign
-			token.props[atr[1]] = atr[2] || atr[3] || atr[4];
+			var prop = atr[4] || atr[3] || atr[2];
+
+			try {
+				if (prop) {
+					// The "escaping" is itself escaped in the string (e.g. `title=\"Test\"` is really `title=\\"Test\\"`)
+					// so trick the parser by putting it in quotes and double parsing :)
+					prop = JSON.parse(JSON.parse("\"" + prop + "\""));
+				}
+			}
+			catch (err) {
+				// Not valid JSON, keep it as a string
+			}
+
+			token.props[atr[1]] = prop;
 		}
 	}
 
