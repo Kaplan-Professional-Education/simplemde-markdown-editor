@@ -39,16 +39,18 @@ function expand_collapse(state, silent) {
 
 	state.posMax = start + result[0].length;
 
-	token = state.push(TOKEN_TYPE, "ExpandA", 0);
+	token = state.push(TOKEN_TYPE, "Collapsible", 0);
 	token.markup = MARKUP;
-	token.tag = "ExpandA";
+	token.tag = "Collapsible";
 	token.props = {};
 
-	token.props.expandText = result[1];
-	token.props.collapseText = result[2];
-	token.props.content = endResult && startResult && content.slice(startResult[0].length, endResult.index);
+	token.props.expandTitle = result[1];
+	token.props.collapseTitle = result[2];
+	token.props.collapsed = true;
+	token.props.onlyText = true;
+	token.props.children = endResult && startResult && content.slice(startResult[0].length, endResult.index);
     
-	state.src = state.src.replace(new RegExp(token.props.content), "");
+	state.src = state.src.replace(new RegExp(token.props.children), "");
 	state.pos = state.posMax;
 	state.posMax = max;
 	return true;
