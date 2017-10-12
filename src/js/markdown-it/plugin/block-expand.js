@@ -71,12 +71,12 @@ function renderJSX(md) {
 
 		// Note: The following will only render in the CMS - MDReactComponent will replace with the actual component
 		return "<span style='display: inline-block; margin: 5px; padding: 5px'>"
-			+ "<a href='#'>"
+			+ "<a class='smde-collapse-toggle'>"
 			+ token.props.expandTitle
 			+ " / "
 			+ token.props.collapseTitle
 			+ "</a>"
-			+ "<br /><span style='border: 1px dashed #ccc; display: inline-block; margin: 5px; padding: 5px'>"
+			+ "<br /><span style='border: 1px dashed #ccc; display: inline-block; margin: 5px; padding: 5px' class='smde-collapse-body'>"
 			+ token.props.children.map(function(item){
 				return md.render(item);
 			}).join("\n")
