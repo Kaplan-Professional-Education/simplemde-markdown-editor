@@ -7,5 +7,6 @@ module.exports = {
 		require("./plugin/inline-jsx"),
 		require("./plugin/inline-icons")(["fa", "kf"]),
 		require("./plugin/inline-link-targets"),
+		require("./plugin/block-expand"),
 	],
 };
