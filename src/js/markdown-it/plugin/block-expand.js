@@ -21,7 +21,7 @@ function expand_collapse(state, startLine, endLine, silent) {
 		max = state.eMarks[startLine],
 		start = state.bMarks[startLine] + state.tShift[startLine];
 
-	if (!EXPAND_OPEN_REGEX.exec(state.src)/* [+"View More" -"View Less"] */) { return false; }
+	if (state.src.charCodeAt(start) !== 0x5B || !EXPAND_OPEN_REGEX.exec(state.src)/* [ or [+"View More" -"View Less"] */) {return false; }
 	if (silent) { return false; } // don't run any pairs in validation mode
 
 	// We need to iterate over block lines
