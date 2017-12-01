@@ -7594,9 +7594,10 @@ function expand_collapse(state, startLine, endLine, silent) {
             collapsed: true,
         },
         max = state.eMarks[startLine],
-        start = state.bMarks[startLine] + state.tShift[startLine];
+        start = state.bMarks[startLine] + state.tShift[startLine],
+        currentText = state.src.slice(start, max);
 
-    if (state.src.charCodeAt(start) !== 0x5B || !EXPAND_OPEN_REGEX.exec(state.src)/* [ or [+"View More" -"View Less"] */) {return false; }
+    if (currentText.charCodeAt(0) !== 0x5B || !EXPAND_OPEN_REGEX.test(currentText)/* [ or [+"View More" -"View Less"] */) {return false; }
     if (silent) { return false; } // don't run any pairs in validation mode
 
     // We need to iterate over block lines
