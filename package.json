@@ -22,7 +22,8 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "gulp": "gulp default"
   },
   "dependencies": {
     "codemirror": "*",
