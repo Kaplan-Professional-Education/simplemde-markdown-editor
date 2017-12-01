@@ -18,61 +18,61 @@ var JSX_TAG_RE    = new RegExp("<" + tag_name + "(" + attribute + ")*\\s*\\/>");
 
 
 function jsx_inline(state, silent) {
-	var match, token, tag, end, attributes, atr,
-		pos = state.pos,
-		max = state.posMax;
+    var match, token, tag, end, attributes, atr,
+        pos = state.pos,
+        max = state.posMax;
 
-	// Check start
-	if (state.src.charCodeAt(pos) !== 0x3C /* < */ ||
+    // Check start
+    if (state.src.charCodeAt(pos) !== 0x3C /* < */ ||
 			pos + 2 >= max) {
-		return false;
-	}
+        return false;
+    }
 
-	match = state.src.slice(pos).match(JSX_TAG_RE);
-	if (!match) { return false; }
+    match = state.src.slice(pos).match(JSX_TAG_RE);
+    if (!match) { return false; }
 
-	end = match[0].length;
-	tag = match[1];
+    end = match[0].length;
+    tag = match[1];
 
-	if (!silent) {
-		token         = state.push("jsx_inline", tag, 0);
-		token.markup  = state.src.slice(pos, pos + end);
+    if (!silent) {
+        token         = state.push("jsx_inline", tag, 0);
+        token.markup  = state.src.slice(pos, pos + end);
 
-		token.props = {};
-		attributes = new RegExp(attribute, "g");
-		while (atr = attributes.exec(match[0])) {  // eslint-disable-line no-cond-assign
-			var prop = atr[4] || atr[3] || atr[2];
+        token.props = {};
+        attributes = new RegExp(attribute, "g");
+        while (atr = attributes.exec(match[0])) {  // eslint-disable-line no-cond-assign
+            var prop = atr[4] || atr[3] || atr[2];
 
-			try {
-				if (prop) {
-					// The "escaping" is itself escaped in the string (e.g. `title=\"Test\"` is really `title=\\"Test\\"`)
-					// so trick the parser by putting it in quotes and double parsing :)
-					prop = JSON.parse(JSON.parse("\"" + prop + "\""));
-				}
-			}
-			catch (err) {
-				// Not valid JSON, keep it as a string
-			}
+            try {
+                if (prop) {
+                    // The "escaping" is itself escaped in the string (e.g. `title=\"Test\"` is really `title=\\"Test\\"`)
+                    // so trick the parser by putting it in quotes and double parsing :)
+                    prop = JSON.parse(JSON.parse("\"" + prop + "\""));
+                }
+            }
+            catch (err) {
+                // Not valid JSON, keep it as a string
+            }
 
-			token.props[atr[1]] = prop;
-		}
-	}
+            token.props[atr[1]] = prop;
+        }
+    }
 
-	state.pos += end;
-	return true;
+    state.pos += end;
+    return true;
 }
 
 function renderJSX(tokens, idx) {
-	var token = tokens[idx];
+    var token = tokens[idx];
 
-	// Note: The following will only render in the CMS - MDReactComponent will replace with the actual component
-	return "<span style='border: 1px dashed #ccc; background-color: #FFFFCE; display: inline-block; margin: 5px; padding: 5px'>"
+    // Note: The following will only render in the CMS - MDReactComponent will replace with the actual component
+    return "<span style='border: 1px dashed #ccc; background-color: #FFFFCE; display: inline-block; margin: 5px; padding: 5px'>"
 		+ token.tag + " Component"
 		+ "</span>";
 }
 
 module.exports = function jsx_plugin(md) {
-	md.inline.ruler.before("html_inline", "span", jsx_inline);
+    md.inline.ruler.before("html_inline", "span", jsx_inline);
 
-	md.renderer.rules["jsx_inline"] = renderJSX;
+    md.renderer.rules["jsx_inline"] = renderJSX;
 };
