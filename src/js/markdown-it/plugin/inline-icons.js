@@ -12,7 +12,7 @@ function icons_inline(iconSets) {
 
         // Check start
         if (state.src.charCodeAt(pos) !== 0x3A /* : */ ||
-				pos + 5 >= max) {
+            pos + 5 >= max) {
             return false;
         }
 
