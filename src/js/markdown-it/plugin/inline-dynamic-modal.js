@@ -46,6 +46,7 @@ function dynamic_content(state, silent) {
     token.tag = "DynamicContentA";
     token.props = {};
     token.props.content = result;
+    token.props.rawText = content;
     
     state.src = state.src.replace(new RegExp(content), "");
     state.pos = state.posMax;
