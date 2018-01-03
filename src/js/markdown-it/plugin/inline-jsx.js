@@ -24,7 +24,7 @@ function jsx_inline(state, silent) {
 
     // Check start
     if (state.src.charCodeAt(pos) !== 0x3C /* < */ ||
-			pos + 2 >= max) {
+        pos + 2 >= max) {
         return false;
     }
 
@@ -67,8 +67,8 @@ function renderJSX(tokens, idx) {
 
     // Note: The following will only render in the CMS - MDReactComponent will replace with the actual component
     return "<span style='border: 1px dashed #ccc; background-color: #FFFFCE; display: inline-block; margin: 5px; padding: 5px'>"
-		+ token.tag + " Component"
-		+ "</span>";
+        + token.tag + " Component"
+        + "</span>";
 }
 
 module.exports = function jsx_plugin(md) {

@@ -8,5 +8,6 @@ module.exports = {
         require("./plugin/inline-icons")(["fa", "kf"]),
         require("./plugin/inline-link-targets"),
         require("./plugin/block-expand"),
+        require("./plugin/inline-dynamic-modal"),
     ],
 };

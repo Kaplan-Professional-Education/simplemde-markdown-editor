@@ -7516,10 +7516,11 @@ module.exports = {
         require("./plugin/inline-icons")(["fa", "kf"]),
         require("./plugin/inline-link-targets"),
         require("./plugin/block-expand"),
+        require("./plugin/inline-dynamic-modal"),
     ],
 };
 
-},{"./plugin/block-align":69,"./plugin/block-expand":70,"./plugin/inline-icons":71,"./plugin/inline-jsx":72,"./plugin/inline-link-targets":73,"./plugin/inline-text-color":74,"markdown-it":5,"markdown-it-sup":4}],69:[function(require,module,exports){
+},{"./plugin/block-align":69,"./plugin/block-expand":70,"./plugin/inline-dynamic-modal":71,"./plugin/inline-icons":72,"./plugin/inline-jsx":73,"./plugin/inline-link-targets":74,"./plugin/inline-text-color":75,"markdown-it":5,"markdown-it-sup":4}],69:[function(require,module,exports){
 
 "use strict";
 
@@ -7670,6 +7671,82 @@ module.exports = function expand_plugin(md, name, options) {
 };
 
 },{}],71:[function(require,module,exports){
+// Process DynamicContent ModalLinkA
+// Based on https://github.com/markdown-it/markdown-it/blob/master/lib/rules_inline/html_inline.js
+
+"use strict";
+
+var DYNAMIC_OPEN_REGEX = /~!~((?:(?!~!~).)+)/;
+var DYNAMIC_CLOSE_REGEX = /(}\~\!\~){1}/;
+var TOKEN_TYPE = "dynamic_content";
+var MARKUP = "{dynamic_content}";
+
+function dynamic_content(state, silent) {
+    var content,
+        token,
+        startResult,
+        endResult,
+        result,
+        nextPos,
+        max = state.posMax,
+        start = state.pos;
+
+    if (state.src.charCodeAt(start) !== 0x7E/* ~ */) { return false; }
+    if (silent) { return false; } // don't run any pairs in validation mode
+    
+    content = state.src.slice(start);
+    startResult = DYNAMIC_OPEN_REGEX.exec(content);
+    endResult = DYNAMIC_CLOSE_REGEX.exec(content);
+    if(!startResult && !endResult) { return false; }
+    if(startResult && endResult) {
+        if(startResult.index < endResult.index) {
+            result = startResult[1];
+        } else {
+            result = endResult;
+        }
+        nextPos = endResult.index + 4;
+    } else if(startResult) {
+        result = startResult[1];
+        nextPos = startResult[0].length;
+    } else {
+        result = endResult;
+        nextPos = endResult.index + 4;
+    }
+
+    state.posMax = start + nextPos;  
+    token = state.push(TOKEN_TYPE, "DynamicContentA", 0);
+    token.markup = MARKUP;
+    token.tag = "DynamicContent";
+    token.props = {};
+    token.props.content = result;
+    
+    state.src = state.src.replace(new RegExp(content), "");
+    state.pos = state.posMax;
+    state.posMax = max;
+    return true;
+}
+
+function renderDynamicContent(tokens, idx) {
+    var token = tokens[idx];
+    try {
+        token.props.content = JSON.parse(token.props.content);
+    } catch (error) {
+        return token.props.content;
+    }
+    // Note: The following will only render in the CMS
+    return "<span style='display: inline-block;'>"
+        + "<a class='smde-dynamic' style='color: #0098cd; text-decoration: none;'>"
+        + token.props.content.title
+        + "</a>"
+        + "</span>";
+}
+
+module.exports = function jsx_plugin(md) {
+    md.inline.ruler.before("html_inline", "dynamic_content", dynamic_content);  
+    md.renderer.rules["dynamic_content"] = renderDynamicContent;
+};
+
+},{}],72:[function(require,module,exports){
 
 "use strict";
 
@@ -7684,7 +7761,7 @@ function icons_inline(iconSets) {
 
         // Check start
         if (state.src.charCodeAt(pos) !== 0x3A /* : */ ||
-				pos + 5 >= max) {
+            pos + 5 >= max) {
             return false;
         }
 
@@ -7726,7 +7803,7 @@ module.exports = function icon_plugin(iconSets) {
     };
 };
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 // Process JSX tags to be converted into React components
 // Based on https://github.com/markdown-it/markdown-it/blob/master/lib/rules_inline/html_inline.js
 
@@ -7753,7 +7830,7 @@ function jsx_inline(state, silent) {
 
     // Check start
     if (state.src.charCodeAt(pos) !== 0x3C /* < */ ||
-			pos + 2 >= max) {
+        pos + 2 >= max) {
         return false;
     }
 
@@ -7796,8 +7873,8 @@ function renderJSX(tokens, idx) {
 
     // Note: The following will only render in the CMS - MDReactComponent will replace with the actual component
     return "<span style='border: 1px dashed #ccc; background-color: #FFFFCE; display: inline-block; margin: 5px; padding: 5px'>"
-		+ token.tag + " Component"
-		+ "</span>";
+        + token.tag + " Component"
+        + "</span>";
 }
 
 module.exports = function jsx_plugin(md) {
@@ -7806,7 +7883,7 @@ module.exports = function jsx_plugin(md) {
     md.renderer.rules["jsx_inline"] = renderJSX;
 };
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 
 "use strict";
 
@@ -7839,7 +7916,7 @@ module.exports = function link_targets_plugin(md) {
     };
 };
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 // Process ~subscript~
 
 "use strict";
