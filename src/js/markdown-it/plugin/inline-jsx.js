@@ -14,11 +14,11 @@ var attribute     = "\\s+" + attr_name + "\\s*=\\s*" + attr_value;
 
 var tag_name      = "([A-Za-z][A-Za-z0-9\\-]*)";
 
-var JSX_TAG_RE    = new RegExp("<" + tag_name + "(" + attribute + ")*\\s*\\/>");
+var JSX_TAG_RE    = new RegExp("<" + tag_name + "(" + attribute + ")*\\s*(\\/?)>(<\\/" + tag_name + ">)?");
 
 
 function jsx_inline(state, silent) {
-    var match, token, tag, end, attributes, atr,
+    var match, token, tag, end, attributes, atr, endTag,
         pos = state.pos,
         max = state.posMax;
 
@@ -33,6 +33,11 @@ function jsx_inline(state, silent) {
 
     end = match[0].length;
     tag = match[1];
+
+    if (!match[match.length - 3]) { // not a self closing tag because match[7] != "/"
+        endTag = match[match.length - 1];
+        if (!endTag || endTag !== tag) return false;
+    }
 
     if (!silent) {
         token         = state.push("jsx_inline", tag, 0);
